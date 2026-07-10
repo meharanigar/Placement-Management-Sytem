@@ -1,0 +1,53 @@
+.studentdetails {
+  width: 90%;
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.studentdetails h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e3a8a;
+  font-size: 28px;
+}
+
+.studentdetails table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.studentdetails th,
+.studentdetails td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.studentdetails th {
+  background-color: #2563eb;
+  color: white;
+  font-size: 17px;
+}
+
+.studentdetails tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.studentdetails tr:hover {
+  background-color: #dbeafe;
+  transition: 0.3s;
+}
+
+.studentdetails td {
+  font-size: 16px;
+  color: #333;
+}
+
+.studentdetails table {
+  overflow: hidden;
+  border-radius: 8px;
+}

@@ -1,0 +1,89 @@
+/* Dashboard.css */
+
+.center {
+    margin-left: 200px;
+    padding: 15px 25px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+.na {
+    text-align: center;
+    font-size: 42px;
+    color: #333;
+    margin-bottom: 10px 0 20px 0;
+}
+
+.center button {
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4b2e83;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.center button:hover {
+    background-color: #351c75;
+}
+
+.center p {
+    font-size: 17px;
+    margin: 10px 0;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card {
+    width: 220px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    font-size: 40px;
+    color: #4b2e83;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.card button {
+    width: 45px;
+    height: 40px;
+    margin: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+ul {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding-left: 20px;
+}
+
+ul li {
+    font-size: 18px;
+    margin: 8px 0;
+    color: #333;
+}
