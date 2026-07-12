@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Registration.css";
-import StudentTable from "../../components/studentTable/StudentTable";
+import StudentTable from "../../components/StudentTable/StudentTable";
+import { Link } from "react-router-dom";
 
 function Registration() {
   const [studentName, setStudentName] = useState("");
@@ -152,6 +153,7 @@ function Registration() {
             Register Student
           </button>
         </form>
+        <Link to={"/Login"}>Alreay Have A Account</Link>
         <StudentTable students={students}/>
               
 

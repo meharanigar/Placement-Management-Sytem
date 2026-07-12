@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
 import Dashboard from "../../components/Dashboard/Dashboard";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [logged, setLogin] = useState(false);
@@ -80,6 +81,8 @@ function Login() {
             >
               {showPassword ? "Hide Password" : "Show Password"}
             </button>
+             <Link to={"/Registration"}>Registration Page
+            </Link>
 
             <button
               className="login-btn"

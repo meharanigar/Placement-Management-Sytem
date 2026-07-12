@@ -24,3 +24,8 @@
     padding-left: "30px";
     height: "100hv";
 };
+.active{
+    background-color: #979da4;
+    padding-left: "30px";
+    height: "100hv";
+}

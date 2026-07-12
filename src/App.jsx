@@ -9,6 +9,10 @@ import { useState } from 'react';
 import Registration from './pages/Registration/Registration';
 import Login from './pages/Login/Login';
 // import studentTable from './components/studenttable/studentTable';
+import { Routes,Route } from 'react-router-dom';
+import StudentTable from './components/StudentTable/StudentTable';
+import Layout from './components/Layout/Layout';
+import Home from "./pages/Home/Home";
 //APP.jsx:The Root component
 //initially everything is dispalyed from app.jsx
 //jsx:browser cant understan the jsx
@@ -72,13 +76,40 @@ function App(){
     <h1>{count}</h1>
     <button onClick={addStudent}>Add student</button>
   
-    <NavBar/>
+    {/* <NavBar/>
     <Sidebar/>
     <Dashboard/>
-     <Registration/>
+     <Registration/> */}
      {/* <studentTable/> */}
-     <Login/>
-     <Footer/>
+     {/* <Login/>
+     <Footer/> */}
+
+     <Routes>
+
+      <Route path="/Login" element={<Login/>}/>
+      <Route path="/Registration" element={<Registration/>}/>
+      <Route element={<Layout/>}>
+      <Route  path="/"
+      element={<Home/>}/>
+
+      <Route path="/Dashboard"
+      element={<Dashboard/>}>
+      </Route>
+      </Route>
+
+    </Routes>
+
+
+
+      <Route path="/NavBar" element={<NavBar/>}/>
+      <Route path="/studentTable" element={<StudentTable/>}/>
+      <Route path="/Footer" element={<Footer/>}/>
+      <Route path="/Sidebar" element={<Sidebar/>}/>
+      <Route path="/Dashboard" element={<Dashboard/>}/>
+      
+
+     
+
     </>
   )
 }
