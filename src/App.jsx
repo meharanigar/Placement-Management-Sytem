@@ -13,6 +13,10 @@ import { Routes,Route } from 'react-router-dom';
 import StudentTable from './components/StudentTable/StudentTable';
 import Layout from './components/Layout/Layout';
 import Home from "./pages/Home/Home";
+import Logout from './components/Logout/Logout';
+import Student from './pages/Student/Student';
+import StudentDetails from './pages/StudentDetails/StudentDetails';
+import Clock from './components/Clock/Clock';
 //APP.jsx:The Root component
 //initially everything is dispalyed from app.jsx
 //jsx:browser cant understan the jsx
@@ -85,6 +89,7 @@ function App(){
      <Footer/> */}
 
      <Routes>
+      <Route path="/Student/:id" element={<StudentDetails/>}/>
 
       <Route path="/Login" element={<Login/>}/>
       <Route path="/Registration" element={<Registration/>}/>
@@ -93,21 +98,18 @@ function App(){
       element={<Home/>}/>
 
       <Route path="/Dashboard"
-      element={<Dashboard/>}>
+      element={<Dashboard/>}/>
       </Route>
-      </Route>
-
-    </Routes>
-
-
-
+      
       <Route path="/NavBar" element={<NavBar/>}/>
       <Route path="/studentTable" element={<StudentTable/>}/>
       <Route path="/Footer" element={<Footer/>}/>
       <Route path="/Sidebar" element={<Sidebar/>}/>
       <Route path="/Dashboard" element={<Dashboard/>}/>
+      <Route path="/Logout" element={<Logout/>}/>
+      <Route path="/Student/:id" element={<Student/>}/>
       
-
+     </Routes>
      
 
     </>

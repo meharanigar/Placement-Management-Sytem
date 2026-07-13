@@ -1,24 +1,21 @@
 import { useState } from "react";
 import "./Registration.css";
-import StudentTable from "../../components/StudentTable/StudentTable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Registration() {
+  const navigate = useNavigate();
+
   const [studentName, setStudentName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [Branch, setBranch] = useState("");
   const [Cgpa, setCgpa] = useState("");
   const [password, setPassword] = useState("");
-  const [showDetails, setShowDetails] = useState(false);
-  // const [Student,setStudent]=useState([]);
-  const [students, setStudents] = useState([]);
-  //Array to store all registartion in array
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -59,6 +56,12 @@ function Registration() {
       return;
     }
 
+    // CGPA Validation
+    if (Cgpa.trim() === "") {
+      alert("CGPA is required");
+      return;
+    }
+
     // Password Validation
     if (password.trim() === "") {
       alert("Password is required");
@@ -67,43 +70,55 @@ function Registration() {
 
     if (!passwordRegex.test(password)) {
       alert(
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
+        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character."
       );
       return;
     }
 
-    // Create student object
+    // Create Student Object
     const student = {
+      id:Date.now(),
       studentName,
       email,
       phone,
       Branch,
-      Cgpa ,
+      Cgpa,
       password,
     };
-    // Store in array
-    setStudents([...students, student]);
 
-    console.log("Registration Successful");
-    console.log([...students, student]);
+    // Get Existing Students
+    const existingStudents =
+      JSON.parse(localStorage.getItem("students")) || [];
+
+    // Add New Student
+    existingStudents.push(student);
+
+    // Save to Local Storage
+    localStorage.setItem(
+      "students",
+      JSON.stringify(existingStudents)
+    );
 
     alert("Registration Successful!");
 
-    setShowDetails(true);
-     // Clear form
+    // Clear Form
     setStudentName("");
     setEmail("");
     setPhone("");
     setBranch("");
     setCgpa("");
     setPassword("");
+
+    // Navigate to Student Table
+    navigate("/StudentTable");
   }
+
   return (
     <div className="registration">
       <div className="form-box">
         <h1>Student Registration</h1>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Enter Student Name"
@@ -146,48 +161,18 @@ function Registration() {
             onChange={(e) => setCgpa(e.target.value)}
           />
 
-          <button
-            type="button"
-            onClick={handleSubmit}
-          >
+          <button type="submit">
             Register Student
           </button>
         </form>
-        <Link to={"/Login"}>Alreay Have A Account</Link>
-        <StudentTable students={students}/>
-              
 
-        {/* <div className="studentdetails">
-            <h2>Student Details</h2>
-            <table border={2}>
-              <th>
-                  <tr>
-                    <th>S.No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Branch</th>
-                    <th>CGPA</th>
-                  </tr>
-              </th>
-            <tbody>
-              {students.map((student, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{student.studentName}</td>
-                  <td>{student.email}</td>
-                  <td>{student.phone}</td>
-                  <td>{student.Branch}</td>
-                  <td>{student.Cgpa}</td>
-                </tr>
-               ))} 
-            </tbody>
-            </table>
-          </div>
-         */}
+        <p style={{ marginTop: "15px" }}>
+          Already Have An Account?{" "}
+          <Link to="/Login">Login</Link>
+        </p>
       </div>
     </div>
-    )
-  
+  );
 }
+
 export default Registration;

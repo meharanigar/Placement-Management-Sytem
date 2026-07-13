@@ -1,38 +1,36 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
+// import { useState } from "react";
 import "./Dashboard.css";
+import Logout from "../Logout/Logout";
+import Clock from "../Clock/Clock";
 
 function Dashboard() {
-  // Hooks with Number State
+  // Number States
   const [students, setStudents] = useState(250);
   const [companies, setCompanies] = useState(33);
   const [placed, setPlaced] = useState(80);
 
-  // Hook with String State
+  // String State
   const [name, setName] = useState("Mehar");
 
-  // Hook with Boolean State
-  const [login, setLogin] = useState(false);
-
-  // Hook with Array State
+  // Array State
   const [studentsList, setStudentsList] = useState([]);
 
-  // Hook with Object State
+  // Object State
   const [student, setStudent] = useState({
     name: "SK. Mehar Nigar",
     course: "CAI",
   });
 
-  // String Update
+  // Change Name
   function changeName() {
     setName(name === "Mehar" ? "Nigar" : "Mehar");
-  }
+  };
+  useEffect(()=>{
+  alert("welcome admin")
+  });
 
-  // Boolean Update
-  function toggleLogin() {
-    setLogin(!login);
-  }
-
-  // Array Update
+  // Show Students
   function addStudent() {
     setStudentsList([
       "Shanmukh",
@@ -42,7 +40,7 @@ function Dashboard() {
     ]);
   }
 
-  // Object Update
+  // Update Course
   function updateStudent() {
     setStudent({
       ...student,
@@ -50,7 +48,7 @@ function Dashboard() {
     });
   }
 
-  // Number Updates
+  // Students
   function increaseStudents() {
     setStudents(students + 1);
   }
@@ -61,6 +59,7 @@ function Dashboard() {
     }
   }
 
+  // Companies
   function increaseCompanies() {
     setCompanies(companies + 1);
   }
@@ -71,6 +70,7 @@ function Dashboard() {
     }
   }
 
+  // Placed Students
   function increasePlaced() {
     if (placed < students) {
       setPlaced(placed + 1);
@@ -86,20 +86,26 @@ function Dashboard() {
   return (
     <div className="center">
 
-      <h1 className="na">Welcome Back, {name}</h1>
+      <div className="dashboard-header">
+        <h1 className="na">Welcome Back, {name} 🎉</h1>
+        <Clock/>
+
+        <Logout />
+      </div>
 
       <button onClick={changeName}>Change Name</button>
-      <button onClick={toggleLogin}>
-        {login ? "Logout" : "Login"}
-      </button>
 
       <button onClick={updateStudent}>
         Update Course
       </button>
 
-      <p><b>Course:</b> {student.course}</p>
+      <p>
+        <b>Course:</b> {student.course}
+      </p>
 
-      <button onClick={addStudent}>Show Students</button>
+      <button onClick={addStudent}>
+        Show Students
+      </button>
 
       <ul>
         {studentsList.map((item, index) => (

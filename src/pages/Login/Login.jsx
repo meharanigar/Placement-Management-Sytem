@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./Login.css";
-import Dashboard from "../../components/Dashboard/Dashboard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [logged, setLogin] = useState(false);
+  const navigate = useNavigate();
+
   const [studentName, setStudentName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,9 @@ function Login() {
         password === "234567890"
       ) {
         setMessage("Login Successful ✅");
-        setLogin(true);
+
+        // Navigate to Dashboard after successful login
+        navigate("/Dashboard");
       } else {
         setMessage("Invalid Username or Password ❌");
       }
@@ -37,83 +39,56 @@ function Login() {
     }, 2000);
   }
 
-  function handleLogout() {
-    setLogin(false);
-    setStudentName("");
-    setEmail("");
-    setPassword("");
-    setShowPassword(false);
-    setMessage("");
-  }
-
   return (
-    <>
-      {!logged ? (
-        <div className="login-container">
-          <div className="login-box">
-            <h1>Placement Management System</h1>
+    <div className="login-container">
+      <div className="login-box">
+        <h1>Placement Management System</h1>
 
-            <input
-              type="text"
-              placeholder="Enter Your Name"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-            />
+        <input
+          type="text"
+          placeholder="Enter Your Name"
+          value={studentName}
+          onChange={(e) => setStudentName(e.target.value)}
+        />
 
-            <input
-              type="email"
-              placeholder="Enter Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+        <input
+          type="email"
+          placeholder="Enter Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-            <button
-              type="button"
-              className="show-password-btn"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide Password" : "Show Password"}
-            </button>
-             <Link to={"/Registration"}>Registration Page
-            </Link>
+        <button
+          type="button"
+          className="show-password-btn"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </button>
 
-            <button
-              className="login-btn"
-              onClick={handleLoading}
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "Login"}
-            </button>
+        <p>
+          Don't have an account?{" "}
+          <Link to="/Registration">Register Here</Link>
+        </p>
 
-            {message && <p className="message">{message}</p>}
-          </div>
-        </div>
-      ) : (
-        <>
-          <h2 className="welcome">
-            Welcome Back, {studentName}! 🎉
-          </h2>
+        <button
+          className="login-btn"
+          onClick={handleLoading}
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
 
-          <Dashboard />
-
-          <div className="logout-container">
-            <button
-              className="logout-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
-        </>
-      )}
-    </>
+        {message && <p className="message">{message}</p>}
+      </div>
+    </div>
   );
 }
 
