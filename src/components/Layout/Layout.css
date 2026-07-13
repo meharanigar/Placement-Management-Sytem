@@ -1,0 +1,47 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Makes the page take the full screen */
+body,
+#root {
+  min-height: 100vh;
+}
+
+/* Main Layout */
+.layout {
+  display: flex;
+  min-height: calc(100vh - 120px); /* 60px Navbar + 60px Footer */
+  background-color: #f4f6f9;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 30px;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .content {
+    padding: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .content {
+    width: 100%;
+    padding: 15px;
+  }
+}
