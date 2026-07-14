@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 // import { useState } from "react";
 import "./Dashboard.css";
-import Logout from "../Logout/Logout";
+// import Logout from "../Logout/Logout";
 import Clock from "../Clock/Clock";
 
 function Dashboard() {
@@ -27,8 +27,9 @@ function Dashboard() {
     setName(name === "Mehar" ? "Nigar" : "Mehar");
   };
   useEffect(()=>{
-  alert("welcome admin")
-  });
+  const loginStatus = localStorage.getItem("isLoggedIn");
+  console.log(loginStatus)
+  },[]);
 
   // Show Students
   function addStudent() {
@@ -89,8 +90,8 @@ function Dashboard() {
       <div className="dashboard-header">
         <h1 className="na">Welcome Back, {name} 🎉</h1>
         <Clock/>
-
-        <Logout />
+{/* 
+        <Logout /> */}
       </div>
 
       <button onClick={changeName}>Change Name</button>

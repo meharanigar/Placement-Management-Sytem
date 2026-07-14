@@ -29,7 +29,7 @@ function StudentTable() {
               <th>Phone</th>
               <th>Branch</th>
               <th>CGPA</th>
-              <th>View</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -47,7 +47,10 @@ function StudentTable() {
                 <td>
                   <Link to={`/Student/${student.id}`}>
                     <button>View</button>
-                  </Link>
+                    <button>Delete</button>
+                    </Link>
+                    <Link to={`/Student/edit/${student.id}`}>Edit</Link>
+                  
                 </td>
               </tr>
             ))}

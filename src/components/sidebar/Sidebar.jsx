@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import "./Sidebar.css";
+import Logout from "../Logout/Logout";
+import StudentTable from '../studenttable/studentTable';
 // import { NavLink } from 'react-router-dom';
 function Sidebar(){
     return(
@@ -31,6 +33,10 @@ function Sidebar(){
             <Link to={"/Login"}>
             <li>Login</li>
             </Link>
+            <Logout/>
+            <Link to={"/StudentTable"}>
+            <li>studenttable</li></Link>
+           
         </ul>
         </div>
     )

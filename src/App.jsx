@@ -14,9 +14,10 @@ import StudentTable from './components/StudentTable/StudentTable';
 import Layout from './components/Layout/Layout';
 import Home from "./pages/Home/Home";
 import Logout from './components/Logout/Logout';
-import Student from './pages/Student/Student';
+import Student from './pages/Student/Student'
 import StudentDetails from './pages/StudentDetails/StudentDetails';
 import Clock from './components/Clock/Clock';
+import EditStudent from './pages/EditStudent/EditStudent';
 //APP.jsx:The Root component
 //initially everything is dispalyed from app.jsx
 //jsx:browser cant understan the jsx
@@ -108,6 +109,8 @@ function App(){
       <Route path="/Dashboard" element={<Dashboard/>}/>
       <Route path="/Logout" element={<Logout/>}/>
       <Route path="/Student/:id" element={<Student/>}/>
+      <Route path="/Student/edit/:id" element={<EditStudent/>}/>
+      <Route path="/editstudent" element={<EditStudent/>}/>
       
      </Routes>
      

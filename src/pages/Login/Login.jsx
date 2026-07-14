@@ -29,8 +29,16 @@ function Login() {
       ) {
         setMessage("Login Successful ✅");
 
-        // Navigate to Dashboard after successful login
-        navigate("/Dashboard");
+          // Save login status
+          localStorage.setItem("isLoggedIn", "true");
+
+          // Save user details
+            sessionStorage.setItem("studentName", studentName);
+            sessionStorage.setItem("email", email);
+
+
+          // Navigate to Dashboard
+          navigate("/Dashboard");
       } else {
         setMessage("Invalid Username or Password ❌");
       }
@@ -38,6 +46,10 @@ function Login() {
       setLoading(false);
     }, 2000);
   }
+  // if(isLoggedIn){
+  //   localStorage.setItem("isLoggedIn","true")
+  //   navigat("/Dash")
+  // }
 
   return (
     <div className="login-container">
