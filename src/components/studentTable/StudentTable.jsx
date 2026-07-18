@@ -1,56 +1,76 @@
 import { useEffect, useState } from "react";
 import "./StudentTable.css";
 import { Link } from "react-router-dom";
+import api from "../../API/api";
 
 function StudentTable() {
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    const storedStudents =
-      JSON.parse(localStorage.getItem("students")) || [];
 
-    setStudents(storedStudents);
+  useEffect(() => {
+    fetchStudents();
   }, []);
 
+  const fetchStudents = async () => {
+    try {
+      const res = await api.get("/students");
+      setStudents(res.data.students);
+    } catch (error) {
+      console.log("Error fetching students:", error);
+    }
+  };
+
+  const deleteStudent = async (id) => {
+    try {
+      await api.delete(`/students/${id}`);
+      fetchStudents();
+    } catch (error) {
+      console.log("Error deleting student:", error);
+    }
+  };
+
   return (
-    <div className="studentdetails">
-      <h2>Student Details</h2>
+    <div>
+      <h2>Registered Students</h2>
 
       {students.length === 0 ? (
-        <h3>No Students Registered Yet!</h3>
+        <p>Students are not found.</p>
       ) : (
-        <table border="1">
+        <table border="1" cellPadding="10">
           <thead>
             <tr>
-              <th>S.No</th>
+              <th>SI.No</th>
               <th>ID</th>
-              <th>Name</th>
+              <th>Student Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Branch</th>
               <th>CGPA</th>
+              <th>Branch</th>
               <th>Action</th>
             </tr>
           </thead>
 
           <tbody>
             {students.map((student, index) => (
-              <tr key={student.id}>
+              <tr key={student._id}>
                 <td>{index + 1}</td>
-                <td>{student.id}</td>
+                <td>{student._id}</td>
                 <td>{student.studentName}</td>
                 <td>{student.email}</td>
                 <td>{student.phone}</td>
-                <td>{student.Branch}</td>
                 <td>{student.Cgpa}</td>
-
+                <td>{student.Branch}</td>
+                
                 <td>
-                  <Link to={`/Student/${student.id}`}>
+                  <Link to={`/student/${student._id}`}>
                     <button>View</button>
-                    <button>Delete</button>
-                    </Link>
-                    <Link to={`/Student/edit/${student.id}`}>Edit</Link>
-                  
+                  </Link>
+
+                  <br />
+
+                  <button onClick={() => deleteStudent(student._id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

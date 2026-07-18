@@ -14,6 +14,13 @@ import { Link } from "react-router-dom";
 import StudentTable from "../../components/StudentTable/StudentTable";
 
 function Student(){
+  const [search,setSearch] = useState("");
+    const filteredStudents = 
+    Students.filter((student)=>
+        student.studentName.toLowerCase().includes(search.toLowerCase())
+    ||  student.email.toLowerCase().includes(search.toLowerCase())
+    ||  student.Branch.toLowerCase().includes(search.toLowerCase())
+)
   return(
     <>
     <h1>Student Management</h1>
@@ -22,8 +29,15 @@ function Student(){
     <button>
      Add New Students
     </button>
-    </Link>
-    <StudentTable Student={Student}/>
+      </Link>
+    <input type="text"
+     placeholder="Search students.."
+     value={search}
+     onChange={(e)=>setSearch(e.target.value)}
+     />
+  
+    <StudentTable Student={filteredStudents}
+     deleteStudent={deleteStudent}/>
     </>
 
   )
