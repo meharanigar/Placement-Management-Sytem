@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Registration.css";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../api/api";
 
 function Registration() {
   const navigate = useNavigate();
@@ -12,106 +13,45 @@ function Registration() {
   const [Cgpa, setCgpa] = useState("");
   const [password, setPassword] = useState("");
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-
-  function handleSubmit(e) {
+  // Handle Form Submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Name Validation
-    if (studentName.trim() === "") {
-      alert("Student Name is required");
-      return;
-    }
-
-    // Email Validation
-    if (email.trim() === "") {
-      alert("Email is required");
-      return;
-    }
-
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address");
-      return;
-    }
-
-    // Phone Validation
-    if (phone.trim() === "") {
-      alert("Phone Number is required");
-      return;
-    }
-
-    const phonePattern = /^[0-9]{10}$/;
-
-    if (!phonePattern.test(phone)) {
-      alert("Phone Number must contain exactly 10 digits");
-      return;
-    }
-
-    // Branch Validation
-    if (Branch.trim() === "") {
-      alert("Branch is required");
-      return;
-    }
-
-    // CGPA Validation
-    if (Cgpa.trim() === "") {
-      alert("CGPA is required");
-      return;
-    }
-
-    // Password Validation
-    if (password.trim() === "") {
-      alert("Password is required");
-      return;
-    }
-
-    if (!passwordRegex.test(password)) {
-      alert(
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character."
-      );
-      return;
-    }
-
-    // Create Student Object
     const student = {
-      id:Date.now(),
       studentName,
       email,
       phone,
       Branch,
       Cgpa,
-      password,
+      // password,
     };
 
-    // Get Existing Students
-    const existingStudents =
-      JSON.parse(localStorage.getItem("students")) || [];
+    try {
+      const res = await api.post("/students", student);
 
-    // Add New Student
-    existingStudents.push(student);
+      alert(res.data.message);
 
-    // Save to Local Storage
-    localStorage.setItem(
-      "students",
-      JSON.stringify(existingStudents)
-    );
+      // Clear Form
+      setStudentName("");
+      setEmail("");
+      setPhone("");
+      setBranch("");
+      setCgpa("");
+      setPassword("");
 
-    alert("Registration Successful!");
+      // Navigate to Student Table
+      navigate("/studentTable");
+    } catch (error) {
+      console.log("Error:", error);
 
-    // Clear Form
-    setStudentName("");
-    setEmail("");
-    setPhone("");
-    setBranch("");
-    setCgpa("");
-    setPassword("");
-
-    // Navigate to Student Table
-    navigate("/StudentTable");
-  }
+      if (error.response) {
+        console.log(error.response.data);
+        alert(error.response.data.message);
+      } else {
+        alert("Server is not responding.");
+      }
+    }
+  };
 
   return (
     <div className="registration">
@@ -124,6 +64,7 @@ function Registration() {
             placeholder="Enter Student Name"
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
+            required
           />
 
           <input
@@ -131,6 +72,7 @@ function Registration() {
             placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
           <input
@@ -138,6 +80,7 @@ function Registration() {
             placeholder="Enter Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required
           />
 
           <input
@@ -145,20 +88,29 @@ function Registration() {
             placeholder="Enter Branch"
             value={Branch}
             onChange={(e) => setBranch(e.target.value)}
+            required
           />
 
+          {/* Uncomment if password is needed */}
+          {/* 
           <input
             type="password"
             placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
+          */}
 
           <input
             type="number"
             placeholder="Enter CGPA"
             value={Cgpa}
             onChange={(e) => setCgpa(e.target.value)}
+            step="0.1"
+            min="0"
+            max="10"
+            required
           />
 
           <button type="submit">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./StudentTable.css";
 import { Link } from "react-router-dom";
-import api from "../../API/api";
+import api from "../../api/api";
 
 function StudentTable() {
   const [students, setStudents] = useState([]);
@@ -9,6 +9,7 @@ function StudentTable() {
 
   useEffect(() => {
     fetchStudents();
+
   }, []);
 
   const fetchStudents = async () => {
@@ -28,6 +29,15 @@ function StudentTable() {
       console.log("Error deleting student:", error);
     }
   };
+  // const updateStudent = async(id)=>{
+  //   try{
+  //     await api.put(`/students/${id}`);
+  //     fetchStudents();
+
+  //   } catch(error) {
+  //     console.log("Error update student:",error);
+  //   }
+  // };
 
   return (
     <div>
@@ -62,8 +72,8 @@ function StudentTable() {
                 <td>{student.Branch}</td>
                 
                 <td>
-                  <Link to={`/student/${student._id}`}>
-                    <button>View</button>
+                  <Link to={`/student/edit/${student._id}`}>
+                    <button>Edit</button>
                   </Link>
 
                   <br />

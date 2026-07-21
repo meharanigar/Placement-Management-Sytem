@@ -18,6 +18,7 @@ import Student from './pages/Student/Student'
 import StudentDetails from './pages/StudentDetails/StudentDetails';
 import Clock from './components/Clock/Clock';
 import EditStudent from './pages/EditStudent/EditStudent';
+
 //APP.jsx:The Root component
 //initially everything is dispalyed from app.jsx
 //jsx:browser cant understan the jsx

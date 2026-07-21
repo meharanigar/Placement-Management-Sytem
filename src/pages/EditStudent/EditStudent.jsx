@@ -1,65 +1,81 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import api from "../../api/api";
 
 function EditStudent() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Get all students from localStorage
-  const students = JSON.parse(localStorage.getItem("students")) || [];
+  const [studentName, setStudentName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [Branch, setBranch] = useState("");
+  const [Cgpa, setCgpa] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Find the selected student
-  const student = students.find((s) => s.id === Number(id));
+  // Fetch student details
+  useEffect(() => {
+    fetchStudent();
+  }, []);
 
-  // If student is not found
-  if (!student) {
-    return <h2>No Student Found!</h2>;
-  }
+  const fetchStudent = async () => {
+    try {
+      const res = await api.get(`/students/${id}`);
 
-  // Form State
-  const [name, setName] = useState(student.studentName || "");
-  const [email, setEmail] = useState(student.email || "");
-  const [phone, setPhone] = useState(student.phone || "");
-  const [branch, setBranch] = useState(student.Branch || "");
-  const [cgpa, setCgpa] = useState(student.Cgpa || "");
+      const student = res.data.student;
 
-  // Update Student
-  function updateStudent(e) {
+      setStudentName(student.studentName);
+      setEmail(student.email);
+      setPhone(student.phone);
+      setBranch(student.Branch);
+      setCgpa(student.Cgpa);
+    } catch (error) {
+      console.log("Error fetching student:", error);
+    }
+  };
+
+  // Update student
+  const updateStudent = async (e) => {
     e.preventDefault();
 
-    const updatedStudents = students.map((s) =>
-      s.id === Number(id)
-        ? {
-            ...s,
-            studentName: name,
-            email: email,
-            phone: phone,
-            Branch: branch,
-            Cgpa: cgpa,
-          }
-        : s
-    );
+    const updatedStudent = {
+      studentName,
+      email,
+      phone,
+      Branch,
+      Cgpa,
+    };
 
-    // Save updated data
-    localStorage.setItem("students", JSON.stringify(updatedStudents));
+    try {
+      setLoading(true);
+      const res = await api.put(`/students/${id}`, updatedStudent);
 
-    alert("Student Updated Successfully!");
+      alert(res.data.message);
+      navigate("/studentTable");
+    } catch (error) {
+      console.log("Error updating student:", error);
 
-    // Redirect to Student Table
-    navigate("/studentTable");
-  }
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Server is not responding.");
+      }
+    } finally{
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="edit-student">
       <h2>Edit Student</h2>
 
       <form onSubmit={updateStudent}>
-
         <input
           type="text"
           placeholder="Student Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={studentName}
+          onChange={(e) => setStudentName(e.target.value)}
+          required
         />
 
         <input
@@ -67,6 +83,7 @@ function EditStudent() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
@@ -74,24 +91,30 @@ function EditStudent() {
           placeholder="Phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          required
         />
 
         <input
           type="text"
           placeholder="Branch"
-          value={branch}
+          value={Branch}
           onChange={(e) => setBranch(e.target.value)}
+          required
         />
 
         <input
           type="number"
           placeholder="CGPA"
-          value={cgpa}
+          value={Cgpa}
           onChange={(e) => setCgpa(e.target.value)}
+          min="0"
+          max="10"
+          step="0.1"
+          required
         />
 
-        <button type="submit">Update Student</button>
-
+        <button disabled={loading} type="submit">
+          {loading ? "Updating student...":"Update Student"}</button>
       </form>
     </div>
   );
