@@ -9,43 +9,47 @@ function Registration() {
   const [studentName, setStudentName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [Branch, setBranch] = useState("");
-  const [Cgpa, setCgpa] = useState("");
-  const [password, setPassword] = useState("");
 
-  // Handle Form Submission
+  const [Cgpa, setCgpa] = useState("");
+  const [Branch, setBranch] = useState("");
+
+  const [image, setImage] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const student = {
-      studentName,
-      email,
-      phone,
-      Branch,
-      Cgpa,
-      // password,
-    };
+    const formData = new FormData();
+
+    formData.append("studentName", studentName);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("Cgpa", Cgpa);
+    formData.append("Branch", Branch);
+
+    formData.append("image", image);
 
     try {
-      const res = await api.post("/students", student);
+      const res = await api.post("/students", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       alert(res.data.message);
 
-      // Clear Form
       setStudentName("");
       setEmail("");
       setPhone("");
-      setBranch("");
       setCgpa("");
-      setPassword("");
+      setBranch("");
+      
+      setImage(null);
 
-      // Navigate to Student Table
       navigate("/studentTable");
     } catch (error) {
-      console.log("Error:", error);
+      console.error(error);
 
       if (error.response) {
-        console.log(error.response.data);
         alert(error.response.data.message);
       } else {
         alert("Server is not responding.");
@@ -84,25 +88,6 @@ function Registration() {
           />
 
           <input
-            type="text"
-            placeholder="Enter Branch"
-            value={Branch}
-            onChange={(e) => setBranch(e.target.value)}
-            required
-          />
-
-          {/* Uncomment if password is needed */}
-          {/* 
-          <input
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          */}
-
-          <input
             type="number"
             placeholder="Enter CGPA"
             value={Cgpa}
@@ -113,6 +98,22 @@ function Registration() {
             required
           />
 
+          <input
+            type="text"
+            placeholder="Enter Branch"
+            value={Branch}
+            onChange={(e) => setBranch(e.target.value)}
+            required
+          />
+
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            required
+          />
+
           <button type="submit">
             Register Student
           </button>
@@ -120,7 +121,7 @@ function Registration() {
 
         <p style={{ marginTop: "15px" }}>
           Already Have An Account?{" "}
-          <Link to="/Login">Login</Link>
+          <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
