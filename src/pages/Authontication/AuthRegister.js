@@ -38,11 +38,12 @@ function AuthRegister() {
           onChange={(e)=>setRole(e.target.value)}
           >
             <option>Admin</option>
-            <option></option>
+            <option>Student</option>
+            <option>Managment</option>
           </select>
-
 
     </from>
   )
 
 }
+
