@@ -36,6 +36,10 @@ function Sidebar(){
             <Logout/>
             <Link to={"/StudentTable"}>
             <li>studenttable</li></Link>
+
+            <li>
+                <Link to="/About">About</Link>
+            </li>
            
         </ul>
         </div>

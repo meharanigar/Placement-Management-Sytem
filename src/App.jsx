@@ -18,6 +18,7 @@ import Student from './pages/Student/Student'
 import StudentDetails from './pages/StudentDetails/StudentDetails';
 import Clock from './components/Clock/Clock';
 import EditStudent from './pages/EditStudent/EditStudent';
+import about from './components/about/about';
 
 //APP.jsx:The Root component
 //initially everything is dispalyed from app.jsx
@@ -112,6 +113,7 @@ function App(){
       <Route path="/Student/:id" element={<Student/>}/>
       <Route path="/Student/edit/:id" element={<EditStudent/>}/>
       <Route path="/editstudent" element={<EditStudent/>}/>
+      <Route path="/about" element={<about/>}/>
       
      </Routes>
      
